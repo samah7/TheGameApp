@@ -1,6 +1,6 @@
 # chronometer
 
-A new Flutter project.
+The Game Application By TG Developers
 
 ## Getting Started
 

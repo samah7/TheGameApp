@@ -28,7 +28,7 @@ class listAdmintstate extends State<listPointsAdm> {
   UserController db=UserController();
   void initState() {
     super.initState();
-     db.getTrandingpoint().then((value) {
+     db.getTrandingpoint(1).then((value) {
       setState(() {
         k=value;
         userDetails=value;

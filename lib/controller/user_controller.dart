@@ -712,32 +712,50 @@ _saveHasChallenge(bool haschallenge)async{
 // /////get point for leaderbord
  
   /////get point for leaderbord
-  Future<List<User>> getTrandingpoint()async{
-    List heroslist=List<User>();
-    String myUrl='$url/getTrandingInPoints';
-    var tk= user.token??token;
-    try{
-      http.Response res= await http.post(myUrl,
-        headers: { "Accept": 'application/json',
-          'Authorization': 'bearer $tk'},
-        body: {
-          "api_password": "xuqhBhc8KkajZbhHoViT"
-        }
-      );
-     var data=  json.decode(res.body);
+   Future<List<User>>getTrandingpoint(int d)async {
 
-     List u=data["challenges"];
-    for (var i=0;i<u.length;i++){
-      var v= User.fromJson(u[i]);
-      heroslist.add(v);
-    }
+     var tk = user.token ?? token;
+     List heroslist=List<User>();
+     print(" token value$tk");
+     String myUrl = '$url/getTrandingInPointsPagination?page=$d';
+     List u = List<Map<String, dynamic>>();
+     final pref=await SharedPreferences.getInstance();
+     final key='shared_token';
+     // value = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9teW1pc3Npb24tYXBpLmhlcm9rdWFwcC5jb21cL2FwaVwvbG9naW4iLCJpYXQiOjE2MTcxMzAyMzgsIm5iZiI6MTYxNzEzMDIzOCwianRpIjoiVUR0eFl6bENpSE0wb241VyIsInN1YiI6MTQ2NSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.djYh31ao27aklEBw89jWyrAvSlG4LCoYuupU3cqjmvM";
+     final value= pref.getString(shared_token);
+     print('token$value');
+     try {
+       http.Response res = await http.post(myUrl,
+           headers: { "Accept": 'application/json',
+             'Authorization': 'bearer $value'},
+           body: {
+             "api_password": "xuqhBhc8KkajZbhHoViT"
+           }
+       );
 
-    }
-    catch(e) {}
-    return heroslist;
+       var data = json.decode(res.body);
 
+       u = data["challenges"]["data"];
+       print(u);
+       print(d);
+       u.forEach((user){heroslist.add(User.fromJson(user));});
+       //or (var i=0;i<u.length;i++){
+       //print('heroslist');
 
-  }
+       //var v= User.fromJson(u[i]);
+       //print('heroslistHHHH');
+       //heroslist.add(v);
+       //}
+
+       //print ('gh $heroslist');
+     }
+     catch (e) {
+       print(e.toString());
+     }
+
+     return heroslist;
+
+   }
 
 //////
 ////gettranding capsules

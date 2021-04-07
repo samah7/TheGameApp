@@ -21,7 +21,7 @@ class User{
   String lastDate;
   
   bool is_challengVerified;
-  int  score;
+  String  score;
 
   bool task1 = true    ;
   bool task2 = true    ;

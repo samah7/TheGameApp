@@ -12,25 +12,59 @@ class poitsWidget extends StatefulWidget{
 
   @override
   State<poitsWidget> createState() {
-   return listWidgetstate();
+    return listWidgetstate();
   }
 
 }
 class listWidgetstate extends State<poitsWidget> {
- var size;
- List<User> k;
-  //listWidgetstate( {Key key} ) :super(key:key);
- UserController db = UserController();
- void initState() {
-   super.initState();
-  db.getTrandingpoint().then((value) {
-    setState(() {
-      k=value;
-    });
-  });
+  var size;
+  var g;
+  List k=List<User>();
+  List kl=List<User>();
+  int c=1;
+  bool load=false;
+  UserController dbo = UserController();
+  ScrollController s=ScrollController();
 
-   //isInLeaderBoard = List<bool>.generate(items.length, (int i) => false);
- }
+
+
+  @override
+  initState(){
+    super.initState();
+    dbo.getTrandingpoint(1).then((v){
+      setState(() {
+        k=v;
+      });
+    });
+    s.addListener(()async {
+      print((s.position.pixels));
+      if(!load&&((s.position.pixels)==(s.position.maxScrollExtent))){
+        load=true;
+        c=c+1;
+        print(load);
+        dbo.getTrandingpoint(c).then((value)
+        async{
+          await new Future.delayed(new Duration(seconds: 100));
+          setState(() {
+
+            k.addAll(value); print(load);
+            load=false;
+          });
+
+        });
+
+
+
+      }
+
+    });
+
+  }
+  @override
+  void dispose(){
+    s.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
@@ -38,10 +72,14 @@ class listWidgetstate extends State<poitsWidget> {
     var sheroname=17.0;//size.height*.024;
     var spoint=size.width*.05;
     return Scaffold(
-      body:(k==null)?Center(child:CircularProgressIndicator()) :Container(
+      body:
+      ((k.length)==0)?Center(child:CircularProgressIndicator()) :Container(
         //margin:EdgeInsets.only(top:10,) ,
+        child:Column(children: [
+          Expanded(
           child:ListView.builder(
-              itemCount:( k.length),
+              controller: s,
+              itemCount: k.length,
               itemBuilder: (BuildContext context, int position) {
                 return Container(
                   //height: size.height*.14,
@@ -57,7 +95,7 @@ class listWidgetstate extends State<poitsWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 //Padding(padding: EdgeInsets.only(right:5)),
-                                k[position].is_challengVerified ? Container(
+                                ((  k[position].is_challengVerified)) ? Container(
                                     margin: EdgeInsets.only(left: size.width*.05,),
                                     height: size.height*.03,
                                     width:  size.height*.03,
@@ -86,7 +124,7 @@ class listWidgetstate extends State<poitsWidget> {
                                     child: CircleAvatar(backgroundColor: Colors.white,
                                         radius:size.width*.0603,
                                         child: Text('${k[position].score}',style:TextStyle(
-                                          fontSize:(spoint>20)?20:spoint,
+                                          fontSize:(spoint>18)?18:spoint,
                                         ),)),),),
                                 ////hero's name
                                 //Padding(padding: EdgeInsets.only(left:34,right: 12)),
@@ -101,41 +139,41 @@ class listWidgetstate extends State<poitsWidget> {
                                 ////circle of account
                                 //Padding(padding: EdgeInsets.only(left:5,),),
                                 Container(
-                                  margin: EdgeInsets.only(right: size.width*.024,),
-                                  child:GestureDetector(
-                                    onTap: (){
-                                      setState(() {
-                                        var url='https://www.instagram.com/${k[position].hero_instagram}/';
-                                        launchInBrowser(url);
-                                      });
-                                    },
-                                    child:CircleAvatar(
-                                    backgroundColor: Colors.black,
-                                    radius:size.width*.072,
-                                    child: CircleAvatar(
-                                        backgroundColor: Colors.white,
+                                    margin: EdgeInsets.only(right: size.width*.024,),
+                                    child:GestureDetector(
+                                      onTap: (){
+                                        setState(() {
+                                          var url='https://www.instagram.com/${k[position].hero_instagram}/';
+                                          launchInBrowser(url);
+                                        });
+                                      },
+                                      child:CircleAvatar(
+                                        backgroundColor: Colors.black,
                                         radius:size.width*.072,
+                                        child: CircleAvatar(
+                                            backgroundColor: Colors.white,
+                                            radius:size.width*.072,
 
-                                        child:(k[position].pictureName!=null) ?   CircleAvatar(
-                                          backgroundColor: Colors.black,
-                                          radius:size.width*.072,
-                                          child: CircleAvatar(
-                                              backgroundColor: Colors.transparent,
-                                              radius:size.width*.072,
-                                              backgroundImage:AssetImage( k[position].pictureName,)
-                                          ) )  :Image.asset('assets/images/account.png',scale: 4,)
-                                    ),),) ),
+                                            child:((k[position].pictureName)!=null) ?   CircleAvatar(
+                                                backgroundColor: Colors.black,
+                                                radius:size.width*.072,
+                                                child: CircleAvatar(
+                                                    backgroundColor: Colors.transparent,
+                                                    radius:size.width*.072,
+                                                    backgroundImage:AssetImage( k[position].pictureName,)
+                                                ) )  :Image.asset('assets/images/account.png',scale: 4,)
+                                        ),),) ),
                                 // Padding(padding: EdgeInsets.only(left:12,),),
                                 Container(margin: EdgeInsets.only(right: size.width*.05),////circle of numbers
                                   child:CircleAvatar(
                                       backgroundColor: Colors.black,
-                                      radius: size.width*.031,
+                                      radius: size.width*.045,
                                       child:CircleAvatar(
-                                        radius:size.width*.03,
+                                        radius:size.width*.042,
                                         foregroundColor: Colors.black,
                                         backgroundColor: Colors.white,
                                         child: Text('${position+1}',style: TextStyle(
-                                            fontSize:  (snum>17)?17:snum
+                                            fontSize:  size.width*.030
                                         ),),
 
                                       )
@@ -147,9 +185,21 @@ class listWidgetstate extends State<poitsWidget> {
                         ],
                       )),
                 );
-              })
+              }
+          )),
+        Container(
+          height: load? 50.0 : 0,
+          color: Colors.transparent,
+          child: Center(
+            child: new CircularProgressIndicator(),
+          ),
+        ),
+      ])
 
-      ),
+
+)
+
+
     );
   }
 }

@@ -110,10 +110,17 @@ class capsuleWidgetstate extends State<capsuleWidget> {
                                       backgroundColor: Colors.black,
                                       radius:size.width*.072,
                                       child: CircleAvatar(
-                                          backgroundColor: Colors.transparent,
+                                          backgroundColor: Colors.white,
                                           radius:size.width*.072,
 
-                                          backgroundImage:AssetImage((capsulelist[position].pictureName==null)?'assets/images/account.png': capsulelist[position].pictureName,)
+                                          child:((capsulelist[position].pictureName)!=null) ?   CircleAvatar(
+                                              backgroundColor: Colors.black,
+                                              radius:size.width*.072,
+                                              child: CircleAvatar(
+                                                  backgroundColor: Colors.transparent,
+                                                  radius:size.width*.072,
+                                                  backgroundImage:AssetImage(capsulelist[position].pictureName,)
+                                              ) )  :Image.asset('assets/images/account.png',scale: 4,)
                                       ),),
 
                                     onTap: (){
@@ -133,13 +140,13 @@ class capsuleWidgetstate extends State<capsuleWidget> {
                                 Container(margin: EdgeInsets.only(right: size.width*.05),////circle of numbers
                                   child:CircleAvatar(
                                       backgroundColor: Colors.black,
-                                      radius: size.width*.031,
+                                      radius: size.width*.045,
                                       child:CircleAvatar(
-                                        radius:size.width*.03,
+                                        radius:size.width*.042,
                                         foregroundColor: Colors.black,
                                         backgroundColor: Colors.white,
                                         child: Text('${position+1}',style: TextStyle(
-                                            fontSize:(snum>17)?17:snum
+                                            fontSize:  size.width*.030
                                         ),),
 
                                       )

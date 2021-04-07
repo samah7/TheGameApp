@@ -37,26 +37,31 @@ class listWidgetstate extends State<poitsWidget> {
       });
     });
     s.addListener(()async {
+
       print((s.position.pixels));
-      if(!load&&((s.position.pixels)==(s.position.maxScrollExtent))){
-        load=true;
+      if((s.position.pixels)==(s.position.maxScrollExtent)){
+        setState(() {
+          load=true;
+        });
+
         c=c+1;
         print(load);
         dbo.getTrandingpoint(c).then((value)
         async{
-          await new Future.delayed(new Duration(seconds: 100));
+
           setState(() {
 
             k.addAll(value); print(load);
-            load=false;
-          });
 
+          });
+          load=false;
         });
 
 
 
       }
 
+    //load=false;
     });
 
   }
@@ -187,13 +192,17 @@ class listWidgetstate extends State<poitsWidget> {
                 );
               }
           )),
-        Container(
-          height: load? 50.0 : 0,
+          load?
+          Container(
+          height: 100,
           color: Colors.transparent,
           child: Center(
             child: new CircularProgressIndicator(),
           ),
-        ),
+        )
+          :Container(
+        height:0,
+    ),
       ])
 
 

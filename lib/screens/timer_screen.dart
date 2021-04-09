@@ -227,7 +227,7 @@ class  TimerScreenstate extends State<TimerScreen>  with SingleTickerProviderSta
        nbCblG = val;
      }); 
   }
-
+//RUN TIMER
   countDownTimer() async {   
      
       for (x = duration.inSeconds; x >= 0; x--) {
@@ -263,7 +263,7 @@ class  TimerScreenstate extends State<TimerScreen>  with SingleTickerProviderSta
          TimerNotif.timerEnd();
     }
   }
-
+//PAUSE FUNCTION 
   runPauseTimer() async{
      stoped = false;
       if(!isRunning && duration.inSeconds==0) 
@@ -288,6 +288,7 @@ class  TimerScreenstate extends State<TimerScreen>  with SingleTickerProviderSta
   }
 
   bool stoped = false;
+  //STOP TIMER
   stopTimer() async{
     setState(() {
                   isRunning = false;
@@ -305,7 +306,7 @@ class  TimerScreenstate extends State<TimerScreen>  with SingleTickerProviderSta
      var time = DateTime.now();
      return '${time.hour.toString().padLeft(2,'0')}:${time.minute.toString().padLeft(2,'0')}';
   }
- 
+ //LOAD CAPSULSE
    loadCapsules(BuildContext context)async{    
     louseFocus(context);
 

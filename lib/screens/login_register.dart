@@ -1,4 +1,4 @@
-import 'package:chronometer/screens/ownerScreenPage.dart';
+import 'package:mymission/screens/ownerScreenPage.dart';
 
 import '../screens/began.dart';
 import '../screens/thehomepage.dart';

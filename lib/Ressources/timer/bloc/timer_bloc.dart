@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:chronometer/Ressources/timer/tinker.dart';
+import 'package:mymission/Ressources/timer/tinker.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 

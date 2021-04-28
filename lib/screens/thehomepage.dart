@@ -1,7 +1,7 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:chronometer/Ressources/timer/bloc/timer_bloc.dart';
-import 'package:chronometer/Ressources/timer/tinker.dart';
-import 'package:chronometer/screens/timer_screen.dart';
+import 'package:mymission/Ressources/timer/bloc/timer_bloc.dart';
+import 'package:mymission/Ressources/timer/tinker.dart';
+import 'package:mymission/screens/timer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

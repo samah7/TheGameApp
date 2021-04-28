@@ -1,9 +1,9 @@
-import 'package:chronometer/Ressources/Ressources.dart';
-import 'package:chronometer/controller/function.dart';
-import 'package:chronometer/controller/user_controller.dart';
-import 'package:chronometer/screens/login_register.dart';
-import 'package:chronometer/widgets/alert.dart';
 import 'package:flutter/material.dart';
+import 'package:mymission/Ressources/Ressources.dart';
+import 'package:mymission/controller/function.dart';
+import 'package:mymission/controller/user_controller.dart';
+import 'package:mymission/screens/login_register.dart';
+import 'package:mymission/widgets/alert.dart';
 
 class CheckPage extends StatefulWidget {
   final bool confirm;

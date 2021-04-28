@@ -4,7 +4,6 @@ import 'package:chronometer/Ressources/Ressources.dart';
 import '../controller/function.dart';
 import 'package:flutter/cupertino.dart';
 import'package:flutter/material.dart';
-import '../models/User.dart';
 import'../controller/user_controller.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_switch/flutter_switch.dart';

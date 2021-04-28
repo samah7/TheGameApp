@@ -1,11 +1,10 @@
+import 'package:chronometer/controller/ownerController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import '../models/ownerChallenge.dart';
-import '../Controller/ownerController.dart';
 import '../Ressources/Ressources.dart';
 import '../models/listChallenges.dart';
-
 
 class OwnerScreen extends StatefulWidget {
   @override
@@ -13,9 +12,9 @@ class OwnerScreen extends StatefulWidget {
 }
 
 class _OwnerPageState extends State<OwnerScreen> {
-  List<Challenge> _challenges = List<Challenge>();
+  List<Challenge> _challenges;
 
-  List<Challenge> _challengeDisplay = List<Challenge>();
+  List<Challenge> _challengeDisplay;
 
   ///search  (affichage de list)
   bool _isLoading = true;
@@ -254,8 +253,8 @@ class _OwnerPageState extends State<OwnerScreen> {
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
                         //25
-                       // fontSize: w * .03396,
-                        fontSize: w * .03396<15 ? w * .03396:15,
+                        // fontSize: w * .03396,
+                        fontSize: w * .03396 < 15 ? w * .03396 : 15,
 
                         fontWeight: FontWeight.bold,
                         fontFamily: fntAljazeera,

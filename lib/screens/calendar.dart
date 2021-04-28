@@ -11,14 +11,13 @@ class Calendar extends StatefulWidget {
 }
 
 class CalendarState extends State<Calendar> {
-
   Future<Day> futureDay;
   UserController db = UserController();
 
   @override
   void initState() {
     super.initState();
-    futureDay = fetchDay();   
+    futureDay = fetchDay();
   }
 
   @override
@@ -28,26 +27,29 @@ class CalendarState extends State<Calendar> {
     bool exists = false;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(H*0.15),
+        preferredSize: Size.fromHeight(H * 0.15),
         child: AppBar(
           leading: new IconButton(
-              icon: Image.asset('assets/images/back.png',scale: 5,),
-              onPressed: () {                
-                if(Navigator.of(context).canPop())
-                  Navigator.of(context).pop();                
-                Navigator.of(context).pushNamed('/home');
-              },
+            icon: Image.asset(
+              'assets/images/back.png',
+              scale: 5,
+            ),
+            onPressed: () {
+              if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/home');
+            },
           ),
           title: Padding(
-            padding: EdgeInsets.only(top:H*0.02, right:12.0),
-            child: Align(alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(top: H * 0.02, right: 12.0),
+            child: Align(
+              alignment: Alignment.centerRight,
               child: Text(
                 ' التحدي',
                 textAlign: TextAlign.right,
                 textDirection: TextDirection.ltr,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: W*0.0917,
+                  fontSize: W * 0.0917,
                   fontFamily: fntAljazeera,
                 ),
               ),
@@ -79,12 +81,15 @@ class CalendarState extends State<Calendar> {
                   child: Align(
                     alignment: Alignment.center,
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         // if(exists)
-                         Navigator.of(context).pushNamed('/dailyTask');
-                         },
+                        Navigator.of(context).pushNamed('/dailyTask');
+                      },
                       child: Container(
-                        margin: EdgeInsets.only(left:W*0.0748, right:W*0.0748),// top:H*0.057, bottom: H*0.0557 ),                      
+                        margin: EdgeInsets.only(
+                            left: W * 0.0748,
+                            right:
+                                W * 0.0748), // top:H*0.057, bottom: H*0.0557 ),
                         height: MediaQuery.of(context).size.height * 0.3,
                         // height: 300,
 
@@ -97,21 +102,26 @@ class CalendarState extends State<Calendar> {
                                   itemCount: 60,
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 10,                                      
-                                          crossAxisSpacing: H*0.012,
-                                          mainAxisSpacing: W*0.0169),
-                                  itemBuilder: (BuildContext context, int index) {
-                                    if ((index + 1) == snapshot.data.DayChallenge) {
-                                      exists=true;
-                                      if(UserController.user.lastDatePoint!=null)
-                                      { 
-                                        var dt = DateTime.parse(UserController.user.lastDatePoint).day;
-                                        if(snapshot.data.DayChallenge!=dt)
-                                        db.saveTask(true, true, true, true, true, true);
+                                          crossAxisCount: 10,
+                                          crossAxisSpacing: H * 0.012,
+                                          mainAxisSpacing: W * 0.0169),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    if ((index + 1) ==
+                                        snapshot.data.DayChallenge) {
+                                      exists = true;
+                                      if (UserController.user.lastDatePoint !=
+                                          null) {
+                                        var dt = DateTime.parse(UserController
+                                                .user.lastDatePoint)
+                                            .day;
+                                        if (snapshot.data.DayChallenge != dt)
+                                          db.saveTask(true, true, true, true,
+                                              true, true);
                                       }
                                       return Container(
-                                        height: W*0.108,
-                                        width: W*0.108,
+                                        height: W * 0.108,
+                                        width: W * 0.108,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: AssetImage(
@@ -122,22 +132,30 @@ class CalendarState extends State<Calendar> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                                      (snapshot.data.DayChallenge.toString()) != null ?
-                                                      (snapshot.data.DayChallenge.toString()): 'default value',
-                                                      style:TextStyle(fontFamily: fntAljazeera, fontSize:W*0.043 ),
-                                              //snapshot.data.display_name
-                                              ),
+                                            (snapshot.data.DayChallenge
+                                                        .toString()) !=
+                                                    null
+                                                ? (snapshot.data.DayChallenge
+                                                    .toString())
+                                                : 'default value',
+                                            style: TextStyle(
+                                                fontFamily: fntAljazeera,
+                                                fontSize: W * 0.043),
+                                            //snapshot.data.display_name
+                                          ),
                                         ),
                                       );
                                     } else {
                                       return Container(
-                                        height: W*0.108,
-                                        width: W*0.108,
+                                        height: W * 0.108,
+                                        width: W * 0.108,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/images/10_locked.png'),
-                                              fit: BoxFit.cover),
+                                            image: AssetImage(
+                                              'assets/images/10_locked.png',
+                                            ),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       );
                                     }
@@ -170,30 +188,34 @@ class CalendarState extends State<Calendar> {
                 ),
               ),
               Container(
-                height: H*0.096,
-                width: W*0.77,
-                margin: EdgeInsets.only(left:  W*0.11, right: W*0.11, top: H*0.072-10),
+                height: H * 0.096,
+                width: W * 0.77,
+                margin: EdgeInsets.only(
+                    left: W * 0.11, right: W * 0.11, top: H * 0.072 - 10),
                 child: Card(
                   // shape: ShapeBorder.,
                   child: Center(
                     child: ListTile(
                       title: Text(
-                        UserController.user.hasChallenge?
-                         str_goToChallenge : str_createChallenge,
+                        UserController.user.hasChallenge
+                            ? str_goToChallenge
+                            : str_createChallenge,
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          fontFamily: fntAljazeera,
-                          fontSize: W*0.057,// H*0.032,// W*0.057,
-                          color: Colors.black,
-                          height: 0.1
-                        ),
+                            fontFamily: fntAljazeera,
+                            fontSize: W * 0.057, // H*0.032,// W*0.057,
+                            color: Colors.black,
+                            height: 0.1),
                       ),
-                      leading:  Image.asset('assets/images/back.png',scale: 5,),
-                      onTap: () {                        
-                          if(UserController.user.hasChallenge)
-                            Navigator.of(context).pushNamed('/getCha');
-                          else
-                            Navigator.of(context).pushNamed('/createCha');
+                      leading: Image.asset(
+                        'assets/images/back.png',
+                        scale: 5,
+                      ),
+                      onTap: () {
+                        if (UserController.user.hasChallenge)
+                          Navigator.of(context).pushNamed('/getCha');
+                        else
+                          Navigator.of(context).pushNamed('/createCha');
                       },
                     ),
                   ),
@@ -204,9 +226,10 @@ class CalendarState extends State<Calendar> {
                 ),
               ),
               Container(
-                height: H*0.096,
-                width: W*0.77,
-                margin: EdgeInsets.only(left:  W*0.11, right: W*0.11, top: 0.038*H),
+                height: H * 0.096,
+                width: W * 0.77,
+                margin: EdgeInsets.only(
+                    left: W * 0.11, right: W * 0.11, top: 0.038 * H),
                 // margin: EdgeInsets.all(40.0),
                 child: Card(
                   child: Center(
@@ -215,16 +238,18 @@ class CalendarState extends State<Calendar> {
                         'العودة للرئيسية',
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          fontFamily: fntAljazeera,
-                          fontSize: W*0.057,// 24.0,
-                          color: Colors.black,
-                          height: 0.1
-                        ),
+                            fontFamily: fntAljazeera,
+                            fontSize: W * 0.057, // 24.0,
+                            color: Colors.black,
+                            height: 0.1),
                       ),
-                      leading:  Image.asset('assets/images/back.png',scale: 5,),
+                      leading: Image.asset(
+                        'assets/images/back.png',
+                        scale: 5,
+                      ),
                       onTap: () {
-                                  Navigator.of(context).pushNamed('/home');
-                                },
+                        Navigator.of(context).pushNamed('/home');
+                      },
                     ),
                   ),
                   elevation: 2.0,

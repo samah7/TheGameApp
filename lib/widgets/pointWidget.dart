@@ -1,4 +1,4 @@
-import 'package:chronometer/controller/user_controller.dart';
+import 'package:mymission/controller/user_controller.dart';
 
 import '../Ressources/Ressources.dart';
 
@@ -129,7 +129,7 @@ class listWidgetstate extends State<poitsWidget> {
                                                       radius:
                                                           size.width * .0603,
                                                       child: Text(
-                                                        '${k[position].score}',
+                                                        '${k[position].score.substring(0, 3)}',
                                                         style: TextStyle(
                                                           fontSize:
                                                               (spoint > 18)

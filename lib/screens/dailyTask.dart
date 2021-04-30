@@ -1,6 +1,6 @@
-import 'package:chronometer/Ressources/Ressources.dart';
-import 'package:chronometer/widgets/alert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mymission/Ressources/Ressources.dart';
+import 'package:mymission/widgets/alert.dart';
 import '../controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';

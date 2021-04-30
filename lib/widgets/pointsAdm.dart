@@ -1,4 +1,4 @@
-import 'package:chronometer/Ressources/Ressources.dart';
+import 'package:mymission/Ressources/Ressources.dart';
 
 import '../controller/function.dart';
 import 'package:flutter/cupertino.dart';
@@ -203,25 +203,25 @@ class listAdmintstate extends State<listPointsAdm> {
                                                                         .0628,
                                                                 child:
                                                                     CircleAvatar(
-                                                                        backgroundColor:
-                                                                            Colors
-                                                                                .white,
-                                                                        radius: size.width *
-                                                                            .0603,
-                                                                        child:
-                                                                            Text(
-                                                                          '${searchResult[position].score}',
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize: (spoint > 20)
-                                                                                ? 20
-                                                                                : spoint,
-                                                                          ),
-                                                                        )),
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  radius:
+                                                                      size.width *
+                                                                          .0603,
+                                                                  child: Text(
+                                                                    '${searchResult[position].score.substring(0, 3)}',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize: (spoint >
+                                                                              20)
+                                                                          ? 20
+                                                                          : spoint,
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
                                                       ),
-                                                      ////User's name
-                                                      ////////////////////////////////
                                                       Expanded(
                                                         child: Container(
                                                           margin:

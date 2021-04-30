@@ -19,6 +19,7 @@ class TimerScreen extends StatefulWidget {
   }
 }
 
+TimerBloc timerBloc;
 int totalCapsules = 0;
 
 class TimerScreenstate extends State<TimerScreen>
@@ -45,7 +46,7 @@ class TimerScreenstate extends State<TimerScreen>
   String msgShow = '';
   String msgError = '';
   int x = 0;
-  TimerBloc timerBloc;
+  int timerTimeInMinutes = 25;
 
   _getSizes() {
     final RenderBox renderBox = _keyRed.currentContext.findRenderObject();
@@ -75,27 +76,27 @@ class TimerScreenstate extends State<TimerScreen>
         if (posy < height) {
           setState(() {
             vIcon = 'assets/images/auto1.png';
-            durInitial = Duration(minutes: 25);
+            durInitial = Duration(minutes: timerTimeInMinutes);
           });
           stopTimer(durInitial);
         } else if (posy <= (height) + 20 && posy >= (height) - 66) {
           if (posx <= (width) + 20 && posy >= (width) - 66) {
             setState(() {
               vIcon = 'assets/images/auto4.png';
-              durInitial = Duration(minutes: 25 * 4);
+              durInitial = Duration(minutes: timerTimeInMinutes * 4);
             });
             stopTimer(durInitial);
           } else {
             setState(() {
               vIcon = 'assets/images/auto2.png';
-              durInitial = Duration(minutes: 25 * 2);
+              durInitial = Duration(minutes: timerTimeInMinutes * 2);
             });
             stopTimer(durInitial);
           }
         } else {
           setState(() {
             vIcon = 'assets/images/auto3.png';
-            durInitial = Duration(minutes: 25 * 3);
+            durInitial = Duration(minutes: timerTimeInMinutes * 3);
           });
           stopTimer(durInitial);
         }
@@ -152,13 +153,14 @@ class TimerScreenstate extends State<TimerScreen>
     }
 
     t?.cancel();
+    timerBloc.close();
     super.dispose();
   }
 
   initState() {
     WidgetsBinding.instance.addObserver(this);
     if (durGlobal.inSeconds == 0) {
-      durInitial = Duration(minutes: 25);
+      durInitial = Duration(minutes: timerTimeInMinutes);
     } else {
       /*      SystemChannels.lifecycle.setMessageHandler((msg) {
 
@@ -186,7 +188,7 @@ class TimerScreenstate extends State<TimerScreen>
            // return;
           });*/
 
-      durInitial = Duration(minutes: 25);
+      durInitial = Duration(minutes: timerTimeInMinutes);
     }
     isRunning = true;
     timerBloc = BlocProvider.of<TimerBloc>(context);
@@ -197,13 +199,6 @@ class TimerScreenstate extends State<TimerScreen>
       ),
     );
     if (!dispoded) initialize();
-
-    t = Timer.periodic(
-      Duration(minutes: 1),
-      (_) {
-        isLoadActive();
-      },
-    );
     super.initState();
   }
 
@@ -211,14 +206,7 @@ class TimerScreenstate extends State<TimerScreen>
     await getRank();
     await getChallenge();
     await readCpls();
-    isLoadActive();
     return true;
-  }
-
-  isLoadActive() {
-    setState(() {
-      loadPrs = nbCblG == 0 || !db.isLoadActive();
-    });
   }
 
   getRank() async {
@@ -308,7 +296,7 @@ class TimerScreenstate extends State<TimerScreen>
         });
         var response =
             await db.addDayCapsules(totalCapsules); //lalla@seba_123.com
-        print('response register: ${totalCapsules}');
+        print('$response\ncapsules : ${totalCapsules}');
         if (!response)
           setState(() {
             msgError = db.rsponseMsg.replaceAll('{', '').replaceAll('[', '');
@@ -544,26 +532,10 @@ class TimerScreenstate extends State<TimerScreen>
                                           : 'assets/images/load.png'),
                                       fit: BoxFit.cover)),
                               child: !loadPrs
-                                  ? InkWell(
+                                  ? MaterialButton(
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
-                                      onTapCancel: () {
-                                        setState(() {
-                                          loadPrs = true;
-                                        });
-                                      },
-                                      onLongPress: () {
-                                        setState(() {
-                                          loadPrs = false;
-                                        });
-                                      },
-                                      onTapDown: (val) {
-                                        setState(() {
-                                          loadPrs = true;
-                                          print('hiiiiiiiiii onTapDown');
-                                        });
-                                      },
-                                      onTap: () => loadCapsules(context),
+                                      onPressed: () => loadCapsules(context),
                                     )
                                   : Text(
                                       '',
@@ -680,19 +652,42 @@ class TimerText extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
     );
+    // return BlocBuilder(
+    //   bloc: timerBloc,
+    //   builder: (context, state) {
+    //     final hoursStr =
+    //         ((state.duration / 3600) % 60).floor().toString().padLeft(2, '0');
+    //     final minutesStr =
+    //         ((state.duration / 60) % 60).floor().toString().padLeft(2, '0');
+    //     final secondsStr =
+    //         (state.duration % 60).floor().toString().padLeft(2, '0');
+    //     return Text(
+    //       '$hoursStr:$minutesStr:$secondsStr',
+    //       style: TextStyle(
+    //         fontSize: MediaQuery.of(context).size.width * 0.097,
+    //         fontFamily: fntAljazeera,
+    //         fontWeight: FontWeight.bold,
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }
 
 class CapsulesText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<TimerBloc>().state;
-    totalCapsules = totalCapsules + state.capsules;
-    return Text(
-      '${totalCapsules}',
-      style: TextStyle(
-        fontSize: 14,
-        fontFamily: fntAljazeera,
+    return BlocListener(
+      bloc: timerBloc,
+      listener: (context, state) {
+        totalCapsules = totalCapsules + state.capsules;
+      },
+      child: Text(
+        '${totalCapsules}',
+        style: TextStyle(
+          fontSize: 14,
+          fontFamily: fntAljazeera,
+        ),
       ),
     );
   }

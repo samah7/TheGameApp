@@ -60,7 +60,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if (state is TimerRunInProgress) {
       _tickerSubscription?.pause();
       yield TimerRunPause(state.duration,
-          (state.duration - 2 == 0) ? chooseCapsules(this.duration) : 0);
+          (state.duration < 2) ? chooseCapsules(this.duration) : 0);
     }
   }
 
@@ -68,7 +68,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if (state is TimerRunPause) {
       _tickerSubscription?.resume();
       yield TimerRunInProgress(state.duration,
-          (state.duration - 2 == 0) ? chooseCapsules(this.duration) : 0);
+          (state.duration < 2) ? chooseCapsules(this.duration) : 0);
     }
   }
 
@@ -82,7 +82,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   Stream<TimerState> _mapTimerTickedToState(TimerTicked tick) async* {
     yield tick.duration > 0
         ? TimerRunInProgress(tick.duration,
-            (tick.duration - 2 == 0) ? chooseCapsules(this.duration) : 0)
+            (tick.duration < 2) ? chooseCapsules(this.duration) : 0)
         : TimerRunComplete(chooseCapsules(tick.duration));
   }
 
@@ -97,8 +97,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       case 3000:
         return 2;
         break;
-      case 1500:
-        return 1;
+      case 60:
+        return 1500;
         break;
     }
     return 0;

@@ -1,4 +1,4 @@
-import 'package:chronometer/widgets/tabBtn.dart';
+import 'package:mymission/widgets/tabBtn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../widgets/CapsulesAdm.dart';

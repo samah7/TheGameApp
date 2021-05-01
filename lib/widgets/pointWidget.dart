@@ -124,19 +124,18 @@ class listWidgetstate extends State<poitsWidget> {
                                                   backgroundColor: Colors.black,
                                                   radius: size.width * .0628,
                                                   child: CircleAvatar(
-                                                      backgroundColor:
-                                                          Colors.white,
-                                                      radius:
-                                                          size.width * .0603,
-                                                      child: Text(
-                                                        '${k[position].score.substring(0, 3)}',
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              (spoint > 18)
-                                                                  ? 18
-                                                                  : spoint,
-                                                        ),
-                                                      )),
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    radius: size.width * .0603,
+                                                    child: Text(
+                                                      '${k[position].score.substring(0, 1)}',
+                                                      style: TextStyle(
+                                                        fontSize: (spoint > 18)
+                                                            ? 18
+                                                            : spoint,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                         ),
                                         ////hero's name

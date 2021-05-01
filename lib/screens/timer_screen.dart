@@ -153,7 +153,7 @@ class TimerScreenstate extends State<TimerScreen>
     }
 
     t?.cancel();
-    timerBloc.close();
+    timerBloc?.close();
     super.dispose();
   }
 
@@ -190,14 +190,9 @@ class TimerScreenstate extends State<TimerScreen>
 
       durInitial = Duration(minutes: timerTimeInMinutes);
     }
-    isRunning = true;
     timerBloc = BlocProvider.of<TimerBloc>(context);
     timerBloc.duration = durInitial.inSeconds;
-    timerBloc.add(
-      TimerStarted(
-        duration: durInitial.inSeconds,
-      ),
-    );
+    stoped = true;
     if (!dispoded) initialize();
     super.initState();
   }
@@ -237,6 +232,14 @@ class TimerScreenstate extends State<TimerScreen>
         timerBloc.add(TimerPaused());
         isRunning = false;
       });
+    } else if (!isRunning && stoped) {
+      setState(() {
+        isRunning = true;
+        stoped = false;
+        timerBloc.add(
+          TimerStarted(duration: durInitial.inSeconds),
+        );
+      });
     } else {
       setState(() {
         timerBloc.add(TimerResumed());
@@ -248,28 +251,12 @@ class TimerScreenstate extends State<TimerScreen>
   bool stoped = false;
   //STOP TIMER
   stopTimer(Duration resetDuration) async {
-    switch (stoped) {
-      case false:
-        {
-          setState(() {
-            isRunning = false;
-            stoped = true;
-            print("duration in stopTimer fun : ${resetDuration.inSeconds}");
-            timerBloc.add(TimerReset(duration: resetDuration));
-          });
-        }
-        break;
-      case true:
-        {
-          setState(() {
-            isRunning = true;
-            stoped = false;
-            timerBloc.add(
-              TimerStarted(duration: durInitial.inSeconds),
-            );
-          });
-        }
-    }
+    setState(() {
+      isRunning = false;
+      stoped = true;
+      print("duration in stopTimer fun : ${resetDuration.inSeconds}");
+      timerBloc.add(TimerReset(duration: resetDuration));
+    });
   }
 
   getTime() {
@@ -423,6 +410,7 @@ class TimerScreenstate extends State<TimerScreen>
                                       scale: 5,
                                     ), //Icon(Icons.keyboard_backspace, size:28),
                                     onPressed: () {
+                                      timerBloc?.close();
                                       if (Navigator.of(context).canPop())
                                         Navigator.of(context)
                                             .popAndPushNamed('/home');
@@ -677,17 +665,13 @@ class TimerText extends StatelessWidget {
 class CapsulesText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      bloc: timerBloc,
-      listener: (context, state) {
-        totalCapsules = totalCapsules + state.capsules;
-      },
-      child: Text(
-        '${totalCapsules}',
-        style: TextStyle(
-          fontSize: 14,
-          fontFamily: fntAljazeera,
-        ),
+    final state = BlocProvider.of<TimerBloc>(context).state;
+    totalCapsules = totalCapsules + state.capsules;
+    return Text(
+      '${totalCapsules}',
+      style: TextStyle(
+        fontSize: 14,
+        fontFamily: fntAljazeera,
       ),
     );
   }

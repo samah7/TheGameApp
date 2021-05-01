@@ -97,8 +97,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       case 3000:
         return 2;
         break;
-      case 60:
-        return 1500;
+      case 1500:
+        return 1;
         break;
     }
     return 0;

@@ -165,6 +165,7 @@ class _TheHomePageState extends State<TheHomePage> {
                 Positioned(
                     bottom: 2.0,
                     right: 2.0,
+                    // right: 2.0,
                     child: Container(
                       height: 43,
                       width: 43,
@@ -271,6 +272,9 @@ class _TheHomePageState extends State<TheHomePage> {
                   )
                 ],
               ),
+
+              ///كبسولات
+              /*
               SizedBox(width: btwElem),
               Column(
                 children: <Widget>[
@@ -312,6 +316,7 @@ class _TheHomePageState extends State<TheHomePage> {
                   )
                 ],
               ),
+              */
             ],
           ),
         ),

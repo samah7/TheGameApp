@@ -12,9 +12,9 @@ class OwnerScreen extends StatefulWidget {
 }
 
 class _OwnerPageState extends State<OwnerScreen> {
-  List<Challenge> _challenges;
+  List<Challenge> _challenges=List<Challenge>();
 
-  List<Challenge> _challengeDisplay;
+  List<Challenge> _challengeDisplay=List<Challenge>();
 
   ///search  (affichage de list)
   bool _isLoading = true;

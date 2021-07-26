@@ -65,8 +65,8 @@ class listWidgetstate extends State<poitsWidget> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var sheroname = 17.0; //size.height*.024;
-    var spoint = size.width * .05;
+    var sheroname = size.height*.02;
+    var spoint = size.width*.036;
     return Scaffold(
         body: (k == null)
             ? Center(child: CircularProgressIndicator())
@@ -212,16 +212,16 @@ class listWidgetstate extends State<poitsWidget> {
                                                   .05), ////circle of numbers
                                           child: CircleAvatar(
                                               backgroundColor: Colors.black,
-                                              radius: size.width * .045,
+                                              radius: size.width * .051,
                                               child: CircleAvatar(
-                                                radius: size.width * .042,
+                                                radius: size.width * .050,
                                                 foregroundColor: Colors.black,
                                                 backgroundColor: Colors.white,
                                                 child: Text(
                                                   '${position + 1}',
                                                   style: TextStyle(
                                                       fontSize:
-                                                          size.width * .030),
+                                                          size.width * .028),
                                                 ),
                                               )),
                                         )

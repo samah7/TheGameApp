@@ -20,11 +20,15 @@ class listAdmintstate extends State<listPointsAdm> {
   var size;
   bool status = true;
   List k;
+  int c = 1;
   List userDetails = [];
   List searchResult = [];
+  bool load = false;
+  UserController dbo = UserController();
+  ScrollController s = ScrollController();
   //listWidgetstate( {Key key} ) :super(key:key);
   UserController db = UserController();
-  void initState() {
+  /*void initState() {
     super.initState();
     db.getTrandingpoint(1).then((value) {
       setState(() {
@@ -34,6 +38,34 @@ class listAdmintstate extends State<listPointsAdm> {
     });
 
     //isInLeaderBoard = List<bool>.generate(items.length, (int i) => false);
+  }*/
+  initState() {
+    super.initState();
+    dbo.getTrandingpoint(1).then((v) {
+      setState(() {
+        k = v;
+      });
+    });
+    s.addListener(() async {
+      print((s.position.pixels));
+      if ((s.position.pixels) == (s.position.maxScrollExtent)) {
+        setState(() {
+          load = true;
+        });
+
+        c = c + 1;
+        print(load);
+        dbo.getTrandingpoint(c).then((value) async {
+          setState(() {
+            k.addAll(value);
+            print(load);
+          });
+          load = false;
+        });
+      }
+
+      //load=false;
+    });
   }
 
   ///////////////////////////////////////
@@ -56,8 +88,8 @@ class listAdmintstate extends State<listPointsAdm> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var snum = size.width * .041;
-    var sheroname = 17.0; //size.height*.0222;
-    var spoint = size.width * .05;
+    var sheroname = size.height*.02;
+    var spoint = size.width *.036;
     return Scaffold(
         body: Container(
       margin: EdgeInsets.only(top: 16),
@@ -414,6 +446,7 @@ class listAdmintstate extends State<listPointsAdm> {
                           : Container(
                               //margin:EdgeInsets.only(top:10,) ,
                               child: ListView.builder(
+                                controller: s,
                                   itemCount: (k.length),
                                   itemBuilder:
                                       (BuildContext context, int position) {
@@ -619,11 +652,11 @@ class listAdmintstate extends State<listPointsAdm> {
                                                                             Colors
                                                                                 .black,
                                                                         radius: size.width *
-                                                                            .031,
+                                                                            .051,
                                                                         child:
                                                                             CircleAvatar(
                                                                           radius:
-                                                                              size.width * .03,
+                                                                              size.width * .05,
                                                                           foregroundColor:
                                                                               Colors.black,
                                                                           backgroundColor:
@@ -633,7 +666,7 @@ class listAdmintstate extends State<listPointsAdm> {
                                                                             '${position + 1}',
                                                                             style:
                                                                                 TextStyle(
-                                                                              fontSize: (snum > 17) ? 17 : snum,
+                                                                              fontSize: size.width * .029,
                                                                             ),
                                                                           ),
                                                                         )),
@@ -705,7 +738,18 @@ class listAdmintstate extends State<listPointsAdm> {
                                           )),
                                         ));
                                   })),
-                    ))
+                    )),
+          load
+              ? Container(
+            height: 100,
+            color: Colors.transparent,
+            child: Center(
+              child: new CircularProgressIndicator(),
+            ),
+          )
+              : Container(
+            height: 0,
+          ),
         ],
       ),
     ));

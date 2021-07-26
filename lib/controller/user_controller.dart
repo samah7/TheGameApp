@@ -18,7 +18,8 @@ class UserController {
     rsponseMsg = '';
     var msg;
     try {
-      final response = await http.post(myUrl, headers: {
+      final response = await http.post(myUrl,
+          headers: {
         'Accept': 'application/json'
       }, body: {
         'social_id': email,
@@ -522,7 +523,7 @@ class UserController {
   }
 
 /////
-  ///
+
 
   _saveHasChallenge(bool haschallenge) async {
     final prefs = await SharedPreferences.getInstance();
@@ -658,7 +659,7 @@ class UserController {
     List<User> heroslist = [];
     print(" token value$tk");
     String myUrl = '$url/getTrandingInPointsPagination?page=$d';
-    List<Map<String, dynamic>> u = [];
+    List<dynamic> u = [];
     final pref = await SharedPreferences.getInstance();
     final key = 'shared_token';
     // value = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9teW1pc3Npb24tYXBpLmhlcm9rdWFwcC5jb21cL2FwaVwvbG9naW4iLCJpYXQiOjE2MTcxMzAyMzgsIm5iZiI6MTYxNzEzMDIzOCwianRpIjoiVUR0eFl6bENpSE0wb241VyIsInN1YiI6MTQ2NSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.djYh31ao27aklEBw89jWyrAvSlG4LCoYuupU3cqjmvM";
